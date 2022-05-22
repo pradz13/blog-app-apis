@@ -2,6 +2,8 @@ package com.app.blog.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.app.blog.payloads.ApiResponse;
 import com.app.blog.payloads.CategoryDto;
 import com.app.blog.service.CategoryService;
@@ -26,13 +28,13 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/")
-    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
         CategoryDto createdCategoryDto = this.categoryService.createCategory(categoryDto);
         return new ResponseEntity<>(createdCategoryDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto,
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto,
             @PathVariable("categoryId") Integer categoryId) {
 
         CategoryDto updCategoryDto = this.categoryService.updateCategory(categoryDto, categoryId);
