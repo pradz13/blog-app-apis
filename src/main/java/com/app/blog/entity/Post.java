@@ -1,7 +1,5 @@
 package com.app.blog.entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,8 +29,6 @@ public class Post {
     private String content;
 
     private String imageName;
-
-    private LocalDateTime addedDate = LocalDateTime.now();
 
     @ManyToOne
     private Category category;

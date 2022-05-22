@@ -11,7 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDto {
-
     private int id;
 
     @NotEmpty(message = "Name cannot be blank")
