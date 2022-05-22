@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "posts")
 @NoArgsConstructor
@@ -35,4 +37,6 @@ public class Post {
 
     @ManyToOne
     private User user;
+
+    private LocalDateTime addedDate;
 }

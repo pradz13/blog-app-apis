@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -16,4 +18,5 @@ public class PostDto {
     private String imageName;
     private Category category;
     private User user;
+    private LocalDateTime addedDate;
 }
