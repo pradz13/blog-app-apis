@@ -1,5 +1,6 @@
 package com.app.blog.controller;
 
+import com.app.blog.payloads.ApiResponse;
 import com.app.blog.payloads.PostDto;
 import com.app.blog.service.PostService;
 
@@ -44,5 +45,23 @@ public class PostController {
     public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Integer categoryId) {
         List<PostDto> postsByCategory = this.postService.getPostsByCategory(categoryId);
         return ResponseEntity.ok(postsByCategory);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> postsByCategory = this.postService.getAllPosts();
+        return ResponseEntity.ok(postsByCategory);
+    }
+
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable Integer postId) {
+        PostDto postDto = this.postService.getPostById(postId);
+        return ResponseEntity.ok(postDto);
+    }
+
+    @DeleteMapping("/post/{postId}")
+    public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId) {
+        this.postService.deletePost(postId);
+        return new ResponseEntity<>(new ApiResponse("Post deleted successfully", true), HttpStatus.OK);
     }
 }
