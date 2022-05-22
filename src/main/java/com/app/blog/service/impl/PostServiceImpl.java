@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.app.blog.entity.Category;
 import com.app.blog.entity.Post;
@@ -77,14 +78,28 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> getPostsByCategory(Integer categoryId) {
-        // TODO Auto-generated method stub
-        return null;
+        Category category = this.categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "Category Id", categoryId));
+
+        List<Post> postsByCategory = this.postRepository.findByCategory(category);
+        return postsByCategory
+                .stream()
+                .map(post -> this.modelMapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
+
     }
 
     @Override
     public List<PostDto> getPostsByUser(Integer userId) {
-        // TODO Auto-generated method stub
-        return null;
+        User user = this.userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+
+        List<Post> postsByUser = this.postRepository.findByUser(user);
+        return postsByUser
+                .stream()
+                .map(post -> this.modelMapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
+
     }
 
     @Override
