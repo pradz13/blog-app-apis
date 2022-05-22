@@ -26,6 +26,14 @@ public class PostController {
         return new ResponseEntity<>(createdPostDto, HttpStatus.CREATED);
     }
 
+    @PutMapping("/post/{postId}")
+    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto,
+                                              @PathVariable Integer postId) {
+
+        PostDto createdPostDto = this.postService.updatePost(postDto, postId);
+        return new ResponseEntity<>(createdPostDto, HttpStatus.OK);
+    }
+
     @GetMapping("/user/{userId}/posts")
     public ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable Integer userId) {
         List<PostDto> postsByUser = this.postService.getPostsByUser(userId);
