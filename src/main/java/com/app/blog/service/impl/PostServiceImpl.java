@@ -11,6 +11,7 @@ import com.app.blog.entity.Post;
 import com.app.blog.entity.User;
 import com.app.blog.exceptions.ResourceNotFoundException;
 import com.app.blog.payloads.PostDto;
+import com.app.blog.payloads.PostResponse;
 import com.app.blog.repository.CategoryRepository;
 import com.app.blog.repository.PostRepository;
 import com.app.blog.repository.UserRepository;
@@ -76,15 +77,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts(int pageNumber, int pageSize) {
+    public PostResponse getAllPosts(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Post> pagePost = this.postRepository.findAll(pageable);
         List<Post> allPosts = pagePost.getContent();
-        return allPosts
+        List<PostDto> allPostDtos = allPosts
                 .stream()
                 .map(post -> this.modelMapper.map(post, PostDto.class))
                 .collect(Collectors.toList());
 
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(allPostDtos);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+        return postResponse;
     }
 
     @Override
